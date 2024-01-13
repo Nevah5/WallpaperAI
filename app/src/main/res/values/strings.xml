@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">WallpaperAI</string>
+    <string name="create_title">Create</string>
+    <string name="library_title">Library</string>
+    <string name="help_title">Help</string>
+    <string name="settings_title">Settings</string>
 </resources>
