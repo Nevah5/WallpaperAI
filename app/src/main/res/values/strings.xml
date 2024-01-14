@@ -4,4 +4,6 @@
     <string name="library_title">Library</string>
     <string name="help_title">Help</string>
     <string name="settings_title">Settings</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

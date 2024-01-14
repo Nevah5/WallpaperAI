@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/nav_create"
+        android:id="@+id/createPageFragment"
         android:icon="@drawable/outline_add_to_photos_24"
         android:title="@string/create_title" />
     <item
-        android:id="@+id/nav_library"
+        android:id="@+id/libraryPageFragment"
         android:icon="@drawable/baseline_auto_awesome_mosaic_24"
         android:title="@string/library_title" />
     <item
-        android:id="@+id/nav_help"
+        android:id="@+id/helpPageFragment"
         android:icon="@drawable/baseline_auto_awesome_mosaic_24"
         android:title="@string/help_title" />
     <item
-        android:id="@+id/nav_settings"
+        android:id="@+id/settingsPageFragment"
         android:icon="@drawable/baseline_auto_awesome_mosaic_24"
         android:title="@string/settings_title" />
 </menu>
