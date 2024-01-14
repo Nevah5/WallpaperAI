@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/libraryPageFragment">
+
+    <fragment
+        android:id="@+id/createPageFragment"
+        android:name="dev.nevah5.uek355.wallpaper_ai.pages.CreatePageFragment"
+        android:label="fragment_create_page"
+        tools:layout="@layout/fragment_create_page" />
+    <fragment
+        android:id="@+id/libraryPageFragment"
+        android:name="dev.nevah5.uek355.wallpaper_ai.pages.LibraryPageFragment"
+        android:label="fragment_library_page"
+        tools:layout="@layout/fragment_library_page" />
+    <fragment
+        android:id="@+id/helpPageFragment"
+        android:name="dev.nevah5.uek355.wallpaper_ai.pages.HelpPageFragment"
+        android:label="fragment_help_page"
+        tools:layout="@layout/fragment_help_page" />
+    <fragment
+        android:id="@+id/settingsPageFragment"
+        android:name="dev.nevah5.uek355.wallpaper_ai.pages.SettingsPageFragment"
+        android:label="fragment_settings_page"
+        tools:layout="@layout/fragment_settings_page" />
+</navigation>
