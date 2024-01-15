@@ -10,7 +10,6 @@ import dev.nevah5.uek355.wallpaper_ai.R
 class LibraryPageFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        println("test")
     }
 
     override fun onCreateView(
