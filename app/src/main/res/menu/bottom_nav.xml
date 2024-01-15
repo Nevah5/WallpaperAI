@@ -4,17 +4,17 @@
     <item
         android:id="@+id/createPageFragment"
         android:icon="@drawable/outline_add_to_photos_24"
-        android:title="@string/create_title" />
+        android:title="@string/create_nav_title" />
     <item
         android:id="@+id/libraryPageFragment"
         android:icon="@drawable/outline_auto_awesome_mosaic_24"
-        android:title="@string/library_title" />
+        android:title="@string/library_nav_title" />
     <item
         android:id="@+id/helpPageFragment"
         android:icon="@drawable/baseline_help_outline_24"
-        android:title="@string/help_title" />
+        android:title="@string/help_nav_title" />
     <item
         android:id="@+id/settingsPageFragment"
         android:icon="@drawable/outline_settings_24"
-        android:title="@string/settings_title" />
+        android:title="@string/settings_nav_title" />
 </menu>

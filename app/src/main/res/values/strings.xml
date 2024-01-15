@@ -1,15 +1,27 @@
 <resources>
     <string name="app_name">WallpaperAI</string>
     <string name="logo_alt">WallpaperAI Logo</string>
-    <string name="create_title">Create</string>
+
+    <!-- Library Fragment -->
+    <string name="library_nav_title">Library</string>
     <string name="library_title">Library</string>
 
+    <!-- Create Fragment -->
+    <string name="create_nav_title">Create</string>
+    <string name="create_title">Create Wallpaper/Widget</string>
+    <string name="create_input_title">What is inspiring you?</string>
+    <string name="create_input_description">Describe your desired wallpaper/widget as best as you can. The AI will take over the rest.</string>
+    <string name="create_button_wallpaper">Generate Wallpaper</string>
+    <string name="create_button_widget">Generate Widget</string>
+    
     <!-- Settings Fragment -->
+    <string name="settings_nav_title">Settings</string>
     <string name="settings_title">Settings</string>
     <string name="settings_button_reset_apikey">Clear API Key</string>
     <string name="settings_button_set_apikey">Login with API Key</string>
 
     <!-- Help Fragment -->
+    <string name="help_nav_title">Help</string>
     <string name="help_title">Help</string>
     <string name="help_question1">What is an API Key?</string>
     <string name="help_question1_answer">An API Key tells the AI who you are and that you are allowed to use it. Because this app uses OpenAI, you have to "login" into OpenAI. This is done via the API Key.</string>
