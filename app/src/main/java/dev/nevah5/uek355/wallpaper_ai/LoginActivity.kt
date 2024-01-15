@@ -1,5 +1,6 @@
 package dev.nevah5.uek355.wallpaper_ai
 
+import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -44,16 +45,14 @@ class LoginActivity : AppCompatActivity() {
                 .show()
             return
         }
-        // TODO: test API Key
         databaseService.setApiKey(editField.text.toString())
-        val mainActivityIntent = Intent(this, MainActivity::class.java)
-        mainActivityIntent.putExtra("initFragment", "create")
-        startActivity(mainActivityIntent)
+        setResult(Activity.RESULT_OK)
+        finish()
     }
 
     fun onButtonSkip(view: View) {
-        val mainActivityIntent = Intent(this, MainActivity::class.java)
-        startActivity(mainActivityIntent)
+        setResult(Activity.RESULT_CANCELED)
+        finish()
     }
 
     override fun onDestroy() {
