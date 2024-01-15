@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Wallpaper_ai"
         tools:targetApi="31">
+        <service android:name=".services.DatabaseService" />
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
