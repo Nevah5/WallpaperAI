@@ -59,6 +59,7 @@ class SettingsPageFragment : Fragment() {
     private fun onClearApiKeyButtonClick() {
         databaseService.setApiKey("")
         Toast.makeText(requireActivity(), "Cleared API Key", Toast.LENGTH_LONG).show()
+        updateApiKeyButtonVisibilities(view)
     }
 
     private fun onSetApiKeyButtonClick() {
@@ -100,6 +101,11 @@ class SettingsPageFragment : Fragment() {
         override fun onServiceDisconnected(arg0: ComponentName) {
             isBound = false
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateApiKeyButtonVisibilities(view)
     }
 
     override fun onStop() {
