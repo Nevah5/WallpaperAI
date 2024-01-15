@@ -15,6 +15,8 @@ This was the class diagram in the planning phase. I have noticed that there are 
 
 - **The `LoginActivity` is missing**  
   The login activity should be connected with the main activity. The activity should be startable in the create fragment or the settings fragment. Depends from where the user is coming.
+- **The `GenerateImageActivity` should be `GenerateActivity`**  
+  I renamed it, because I think it's easier.
 - **The `CreatePageFragment` also uses `DatabaseService`**  
   When you go to the Create page, it has to detect if the user entered an api key already. For this the database service has to be called to check this. If the user hasn't entered a key, it starts the LoginActivity.
 - **`hasApiKey()` method on the `DatabaseService`**  
