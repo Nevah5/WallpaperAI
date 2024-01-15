@@ -19,6 +19,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
 import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import java.io.IOException
 
 class OpenAiService : Service() {
@@ -58,6 +60,39 @@ class OpenAiService : Service() {
             }
         } catch (e: IOException) {
             errorString = "Check internet connection?"
+            false
+        }
+    }
+
+    suspend fun generateImage(apiKey: String, description: String): Boolean {
+        val client = OkHttpClient()
+        val payload = """
+        {
+            "model": "dall-e-3",
+            "prompt": "$description",
+            "n": 1,
+            "size": "1024x1792"
+        }
+        """
+        val request = Request.Builder()
+            .url("https://api.openai.com/v1/images/generations")
+            .addHeader("Authorization", "Bearer $apiKey")
+            .addHeader("Content-Type", "application/json")
+            .post(payload.toRequestBody())
+            .build()
+
+        return try {
+            // TODO: Use debug logger
+            println("Making API Request with Key: $apiKey")
+            val response = withContext(Dispatchers.IO) {
+                client.newCall(request).execute()
+            }
+            // TODO: Use debug logger
+            println("Response: $response")
+
+            println(response.message)
+            response.isSuccessful
+        } catch (e: IOException) {
             false
         }
     }

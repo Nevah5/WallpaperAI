@@ -2,6 +2,15 @@
     <string name="app_name">WallpaperAI</string>
     <string name="logo_alt">WallpaperAI Logo</string>
 
+    <!-- Generate Activity -->
+    <string name="generate_title1">Conjuring Pixels…</string>
+    <string name="generate_title2">Patience, Picasso…</string>
+    <string name="generate_title3">Art in the Making…</string>
+    <string name="generate_title4">Painting with Algorithms…</string>
+    <string name="generate_title5">Designing Dreams…</string>
+    <string name="generate_title6">Sculpting Scenes…</string>
+    <string name="generate_loading_icon_alt">Loading icon</string>
+
     <!-- Library Fragment -->
     <string name="library_nav_title">Library</string>
     <string name="library_title">Library</string>
@@ -13,7 +22,7 @@
     <string name="create_input_description">Describe your desired wallpaper/widget as best as you can. The AI will take over the rest.</string>
     <string name="create_button_wallpaper">Generate Wallpaper</string>
     <string name="create_button_widget">Generate Widget</string>
-    
+
     <!-- Settings Fragment -->
     <string name="settings_nav_title">Settings</string>
     <string name="settings_title">Settings</string>
