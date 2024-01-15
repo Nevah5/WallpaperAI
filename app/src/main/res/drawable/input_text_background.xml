@@ -3,14 +3,14 @@
     <!-- Focused State -->
     <item android:state_focused="true">
         <shape android:shape="rectangle">
-            <corners android:radius="8dp"/> <!-- Rounded corners -->
+            <corners android:radius="10dp"/> <!-- Rounded corners -->
             <stroke android:width="1dp" android:color="@color/text"/> <!-- Border color when focused -->
         </shape>
     </item>
     <!-- Default State -->
     <item>
         <shape android:shape="rectangle">
-            <corners android:radius="8dp"/> <!-- Rounded corners -->
+            <corners android:radius="10dp"/> <!-- Rounded corners -->
             <stroke android:width="1dp" android:color="@color/text"/> <!-- Default border color -->
         </shape>
     </item>
