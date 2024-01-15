@@ -25,5 +25,17 @@ class MainActivity : AppCompatActivity() {
 
         val databaseServiceIntent = Intent(this, DatabaseService::class.java)
         startService(databaseServiceIntent)
+
+        // TODO: Convert this to enum
+        val initFragment = intent?.getStringExtra("initFragment")
+        println(initFragment)
+        initFragment?.let {
+            when (it) {
+                "create" -> navController.navigate(R.id.createPageFragment)
+                "library" -> navController.navigate(R.id.libraryPageFragment)
+                "help" -> navController.navigate(R.id.helpPageFragment)
+                "settings" -> navController.navigate(R.id.settingsPageFragment)
+            }
+        }
     }
 }

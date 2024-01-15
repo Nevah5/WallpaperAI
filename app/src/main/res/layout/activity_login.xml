@@ -108,16 +108,16 @@
             android:id="@+id/login_input_title_apikey"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/login_input_title_apikey"
             android:labelFor="@+id/input_text_apikey"
+            android:text="@string/login_input_title_apikey"
             android:textSize="18sp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/input_text_apikey"
             android:layout_width="match_parent"
-            android:autofillHints=""
             android:layout_height="45sp"
+            android:autofillHints=""
             android:background="@drawable/input_text_background"
             android:ems="10"
             android:inputType="text"
@@ -136,22 +136,24 @@
             android:id="@+id/login_button_continue"
             android:layout_width="match_parent"
             android:layout_height="45sp"
-            android:backgroundTint="@color/primary"
             android:background="@drawable/button_background"
+            android:backgroundTint="@color/primary"
+            android:onClick="onButtonContinue"
+            android:text="@string/login_button_continue"
             android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:text="@string/login_button_continue" />
+            android:textColor="@color/white" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/login_button_skip"
             android:layout_width="match_parent"
             android:layout_height="45sp"
             android:layout_marginTop="10sp"
-            android:backgroundTint="@color/secondary"
             android:background="@drawable/button_background"
+            android:backgroundTint="@color/secondary"
+            android:onClick="onButtonSkip"
+            android:text="@string/login_button_skip"
             android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:text="@string/login_button_skip" />
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
