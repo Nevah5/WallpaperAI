@@ -10,6 +10,7 @@ import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatButton
@@ -38,6 +39,7 @@ class CreatePageFragment : Fragment() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 navController.navigate(R.id.libraryPageFragment)
+                view?.findViewById<EditText>(R.id.create_input_imagination)?.text?.clear()
             } else {
                 Toast.makeText(requireActivity(), "The generation was cancelled or crashed unexpectedly.", Toast.LENGTH_SHORT)
                     .show()
@@ -57,17 +59,41 @@ class CreatePageFragment : Fragment() {
 
         val generateWallpaperButton = view.findViewById<AppCompatButton>(R.id.create_button_wallpaper)
         val generateWidgetButton = view.findViewById<AppCompatButton>(R.id.create_button_widget)
+        val inputImageImagination = view.findViewById<EditText>(R.id.create_input_imagination)
 
         generateWallpaperButton.setOnClickListener {
-            // TODO: Pass in wallpaper/widget
-            val generateActivityIntent = Intent(requireActivity(), GenerateActivity::class.java)
-            generateActivityResultListener.launch(generateActivityIntent)
+            if(validateImaginationInputText(inputImageImagination.text.toString())) {
+                startGenerationActivity(inputImageImagination, true)
+            }
         }
         generateWidgetButton.setOnClickListener {
-            // TODO: Pass in wallpaper/widget
-            val generateActivityIntent = Intent(requireActivity(), GenerateActivity::class.java)
-            generateActivityResultListener.launch(generateActivityIntent)
+            if(validateImaginationInputText(inputImageImagination.text.toString())) {
+                startGenerationActivity(inputImageImagination, false)
+            }
         }
+    }
+
+    private fun startGenerationActivity(inputImageImagination: EditText, isWallpaper: Boolean){
+        val generateActivityIntent = Intent(requireActivity(), GenerateActivity::class.java)
+        generateActivityIntent.putExtra("description", inputImageImagination.text.toString())
+        generateActivityIntent.putExtra("isWallpaper", isWallpaper)
+        generateActivityResultListener.launch(generateActivityIntent)
+    }
+
+    private fun validateImaginationInputText(text: String): Boolean {
+        // I know, I know, this does not belong here. No logic... Normally this would go into the ViewModel,
+        // but since I am not using the MVVMC design pattern, more like the MVC pattern, I put this here.
+        // This is not critical code... So testing it would be a waste of time in my time management.
+        if(text.isEmpty()) {
+            Toast.makeText(requireActivity(), "Please provide your fancy and creating imagination.", Toast.LENGTH_SHORT)
+                .show()
+            return false
+        } else if (text.length < 20) {
+            Toast.makeText(requireActivity(), "Please provide at least 20 characters.", Toast.LENGTH_SHORT)
+                .show()
+            return false
+        }
+        return true
     }
 
     private val connection = object : ServiceConnection {
