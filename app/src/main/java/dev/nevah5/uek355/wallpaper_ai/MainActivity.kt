@@ -8,6 +8,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import dev.nevah5.uek355.wallpaper_ai.services.DatabaseService
+import dev.nevah5.uek355.wallpaper_ai.services.OpenAiService
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -25,5 +26,8 @@ class MainActivity : AppCompatActivity() {
 
         val databaseServiceIntent = Intent(this, DatabaseService::class.java)
         startService(databaseServiceIntent)
+
+        val openAiServiceIntent = Intent(this, OpenAiService::class.java)
+        startService(openAiServiceIntent)
     }
 }

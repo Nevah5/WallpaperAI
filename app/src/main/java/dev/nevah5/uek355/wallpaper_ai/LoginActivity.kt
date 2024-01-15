@@ -12,42 +12,76 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import dev.nevah5.uek355.wallpaper_ai.services.DatabaseService
+import dev.nevah5.uek355.wallpaper_ai.services.OpenAiService
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var databaseService: DatabaseService
-    private var isBound = false
+    private lateinit var openAiService: OpenAiService
+    private var isDatabaseServiceBound = false
+    private var isOpenAiServiceBound = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
         Intent(this, DatabaseService::class.java).also { intent ->
-            this.bindService(intent, connection, Context.BIND_AUTO_CREATE)
+            this.bindService(intent, databaseConnection, Context.BIND_AUTO_CREATE)
+        }
+
+        Intent(this, OpenAiService::class.java).also { intent ->
+            this.bindService(intent, openAiConnection, Context.BIND_AUTO_CREATE)
         }
     }
 
-    private val connection = object : ServiceConnection {
+    private val databaseConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
             val binder = service as DatabaseService.LocalBinder
             databaseService = binder.getService()
-            isBound = true
+            isDatabaseServiceBound = true
         }
 
         override fun onServiceDisconnected(arg0: ComponentName) {
-            isBound = false
+            isDatabaseServiceBound = false
+        }
+    }
+
+    private val openAiConnection = object : ServiceConnection {
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            val binder = service as OpenAiService.LocalBinder
+            openAiService = binder.getService()
+            isOpenAiServiceBound = true
+        }
+
+        override fun onServiceDisconnected(arg0: ComponentName) {
+            isOpenAiServiceBound = false
         }
     }
 
     fun onButtonContinue(view: View) {
         val editField = findViewById<EditText>(R.id.input_text_apikey)
-        if (editField.text.isEmpty()) {
-            Toast.makeText(this, "Please enter an API Key before continuing.", Toast.LENGTH_LONG)
-                .show()
+        val apiKey = editField.text.toString().trim()
+
+        if (apiKey.isEmpty()) {
+            showToast("Please enter an API Key before continuing.")
             return
         }
-        databaseService.setApiKey(editField.text.toString())
-        setResult(Activity.RESULT_OK)
-        finish()
+
+        GlobalScope.launch(Dispatchers.IO) {
+            val isValidKey = openAiService.verifyApiKey(apiKey)
+            launch(Dispatchers.Main) {
+                if (isValidKey) {
+                    databaseService.setApiKey(apiKey)
+                    setResult(Activity.RESULT_OK)
+                    showToast("Success!")
+                    finish()
+                } else {
+                    showToast("Invalid API Key.")
+                }
+            }
+        }
     }
 
     fun onButtonSkip(view: View) {
@@ -57,9 +91,17 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (isBound) {
-            this.unbindService(connection)
-            isBound = false
+        if (isDatabaseServiceBound) {
+            this.unbindService(databaseConnection)
+            isDatabaseServiceBound = false
         }
+        if (isOpenAiServiceBound) {
+            this.unbindService(openAiConnection)
+            isOpenAiServiceBound = false
+        }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 }
