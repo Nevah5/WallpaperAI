@@ -1,11 +1,13 @@
 package dev.nevah5.uek355.wallpaper_ai
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import dev.nevah5.uek355.wallpaper_ai.services.DatabaseService
 
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
@@ -20,5 +22,8 @@ class MainActivity : AppCompatActivity() {
 
         val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottomNavigationView)
         bottomNavigationView.setupWithNavController(navController)
+
+        val databaseServiceIntent = Intent(this, DatabaseService::class.java)
+        startService(databaseServiceIntent)
     }
 }
