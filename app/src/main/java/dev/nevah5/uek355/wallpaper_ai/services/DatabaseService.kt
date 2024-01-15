@@ -5,7 +5,8 @@ import android.content.Intent
 import android.os.Binder
 import android.os.IBinder
 
-class DatabaseService : Service() {private val binder = LocalBinder()
+class DatabaseService : Service() {
+    private val binder = LocalBinder()
     // TODO: make this persistent
     private var apiKey = ""
 
@@ -17,11 +18,21 @@ class DatabaseService : Service() {private val binder = LocalBinder()
         return binder
     }
 
+    override fun onCreate() {
+        super.onCreate()
+//        loadDataFromDatabase()
+    }
+
+    private fun loadDataFromDatabase() {
+        TODO("Code to load from database")
+    }
+
     fun hasApiKey(): Boolean {
         return apiKey.isNotEmpty()
     }
 
     fun setApiKey(apiKey: String) {
+        // TODO: save into database/file
         this.apiKey = apiKey
     }
 
