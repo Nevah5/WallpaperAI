@@ -23,6 +23,7 @@ import java.io.IOException
 
 class OpenAiService : Service() {
     private val binder = LocalBinder()
+    private var errorString = ""
 
     inner class LocalBinder : Binder() {
         fun getService(): OpenAiService = this@OpenAiService
@@ -52,42 +53,18 @@ class OpenAiService : Service() {
             if (response.isSuccessful) {
                 true
             } else {
-                // Log the error or handle it as needed
+                errorString = "Invalid API Key"
                 false
             }
         } catch (e: IOException) {
-            // Handle network exception
+            errorString = "Check internet connection?"
             false
         }
     }
 
-//    private fun makeApiRequestJson(url: String){
-//        try {
-//            val requestUrl = URL(url)
-//            val connection = requestUrl.openConnection() as HttpURLConnection
-//            val inputStream: InputStream = BufferedInputStream(connection.inputStream)
-//            val reader = JsonReader(InputStreamReader(inputStream, MainActivity.CHARSET_NAME))
-//            reader.beginObject()
-//            reader.nextName()
-//            reader.beginObject()
-//            while (reader.hasNext()) {
-//                val name = reader.nextName()
-//                if (name == MainActivity.TEMPERATURE_LABEL) {
-//                    newTemperature = reader.nextDouble().toString()
-//                } else {
-//                    reader.skipValue()
-//                }
-//            }
-//            reader.close()
-//            inputStream.close()
-//        } catch (e: MalformedURLException) {
-//            e.printStackTrace()
-//            reportErrorToUser()
-//        } catch (e: IOException) {
-//            e.printStackTrace()
-//            reportErrorToUser()
-//        }
-//    }
+    fun getErrorString(): String {
+        return errorString
+    }
 
     private fun reportErrorToUser() {
         TODO("implement")

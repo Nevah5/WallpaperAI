@@ -78,7 +78,7 @@ class LoginActivity : AppCompatActivity() {
                     showToast("Success!")
                     finish()
                 } else {
-                    showToast("Invalid API Key.")
+                    showToast(openAiService.getErrorString())
                 }
             }
         }
