@@ -9,6 +9,7 @@ import android.os.IBinder
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 
+// TODO: Refactor to `PreferenceService`
 class DatabaseService : Service() {
     private val binder = LocalBinder()
     // TODO: make this persistent

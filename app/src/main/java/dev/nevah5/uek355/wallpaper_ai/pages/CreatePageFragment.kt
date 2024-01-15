@@ -14,7 +14,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import dev.nevah5.uek355.wallpaper_ai.LoginActivity
 import dev.nevah5.uek355.wallpaper_ai.R
 import dev.nevah5.uek355.wallpaper_ai.services.DatabaseService

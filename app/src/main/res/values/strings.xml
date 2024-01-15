@@ -3,7 +3,11 @@
     <string name="logo_alt">WallpaperAI Logo</string>
     <string name="create_title">Create</string>
     <string name="library_title">Library</string>
+
+    <!-- Settings Fragment -->
     <string name="settings_title">Settings</string>
+    <string name="settings_button_reset_apikey">Clear API Key</string>
+    <string name="settings_button_set_apikey">Login with API Key</string>
 
     <!-- Help Fragment -->
     <string name="help_title">Help</string>
@@ -13,7 +17,7 @@
     <string name="help_question2_answer">No, sadly you can\'t. You have to provide an API Key for the AI to be able to generate images.</string>
     <string name="help_question3">I created a Widget, how can I use it?</string>
     <string name="help_question3_answer">Go to your home screen, edit it and then you should find a button somewhere to add Widgets. The generated Widget from WallpaperAI should be shown there.</string>
-    
+
     <!-- Login Activity -->
     <string name="login_welcome_title">Welcome to WallpaperAI!</string>
     <string name="login_welcome_text">For WallpaperAI to function, it needs your API Key from OpenAI to generate Wallpapers. Make sure you have ChatGPT Plus, else it will not work.</string>
