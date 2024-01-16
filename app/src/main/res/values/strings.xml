@@ -14,6 +14,12 @@
     <!-- Library Fragment -->
     <string name="library_nav_title">Library</string>
     <string name="library_title">Library</string>
+    <string name="library_templates_title">Templates</string>
+    <string name="library_templates_placeholder">Template wallpapers will show here.</string>
+    <string name="library_wallpaper_title">Your Wallpapers</string>
+    <string name="library_wallpaper_placeholder">Your created Wallpapers will show here.</string>
+    <string name="library_widget_title">Your Widgets</string>
+    <string name="library_widget_placeholder">Coming soon!</string>
 
     <!-- Create Fragment -->
     <string name="create_nav_title">Create</string>

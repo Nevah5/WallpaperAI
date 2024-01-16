@@ -1,5 +1,6 @@
 package dev.nevah5.uek355.wallpaper_ai
 
+import android.app.Activity
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -34,8 +35,6 @@ class GenerateActivity : AppCompatActivity() {
 
     private fun checkServicesConnected() {
         if (!isDatabaseServiceBound || !isOpenAiServiceBound) return
-        println(databaseConnection)
-        println(openAiConnection)
 
         val isWallpaper = intent.getBooleanExtra("isWallpaper", true)
         val description = intent.getStringExtra("description") as String
@@ -47,6 +46,7 @@ class GenerateActivity : AppCompatActivity() {
             val resultBool = openAiService.generateImage(preferenceService.getApiKey(), description, isWallpaper)
             launch(Dispatchers.Main) {
                 println("GENERATED IMAGE RESULT BOOL: $resultBool")
+                setResult(Activity.RESULT_OK)
                 finish()
             }
         }
