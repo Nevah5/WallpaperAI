@@ -21,3 +21,7 @@ This was the class diagram in the planning phase. I have noticed that there are 
   When you go to the Create page, it has to detect if the user entered an api key already. For this the database service has to be called to check this. If the user hasn't entered a key, it starts the LoginActivity.
 - **`hasApiKey()` method on the `DatabaseService`**  
   I realized that it would be easier, if there was another method to check if the api key was set. Then I don't have to always do `databaseService.getApiKey().isNotEmpty()`.
+- **`ImageModel` is a data class**  
+  The ImageTypeEnums is also not existent, because when the ImageModel is safed, it stores the urls in different jsons. For example `wallpapers.json` and `widgets.json`
+- **`PreferencesService`, `DatabaseService`**  
+  The PreferencesService holds the methods to store and read the APIKey, the `DatabaseService` (`ImageService` in the diagram) stores all the image urls in json files.
