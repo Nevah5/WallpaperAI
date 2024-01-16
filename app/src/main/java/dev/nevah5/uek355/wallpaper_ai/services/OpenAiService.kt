@@ -44,8 +44,6 @@ class OpenAiService : Service() {
             .build()
 
         return try {
-            // TODO: Use debug logger
-            println("Making API Request with Key: $apiKey")
             val response = withContext(Dispatchers.IO) {
                 client.newCall(request).execute()
             }
@@ -64,14 +62,14 @@ class OpenAiService : Service() {
         }
     }
 
-    suspend fun generateImage(apiKey: String, description: String): Boolean {
+    suspend fun generateImage(apiKey: String, description: String, isWallpaper: Boolean): Boolean {
         val client = OkHttpClient()
         val payload = """
         {
             "model": "dall-e-3",
             "prompt": "$description",
             "n": 1,
-            "size": "1024x1792"
+            "size": "${ if(isWallpaper) "1024x1792" else "1792x1024"}"
         }
         """
         val request = Request.Builder()
@@ -82,8 +80,6 @@ class OpenAiService : Service() {
             .build()
 
         return try {
-            // TODO: Use debug logger
-            println("Making API Request with Key: $apiKey")
             val response = withContext(Dispatchers.IO) {
                 client.newCall(request).execute()
             }
