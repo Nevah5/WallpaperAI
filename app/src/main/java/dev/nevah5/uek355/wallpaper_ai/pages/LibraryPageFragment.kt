@@ -1,5 +1,6 @@
 package dev.nevah5.uek355.wallpaper_ai.pages
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.core.view.children
 import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import dev.nevah5.uek355.wallpaper_ai.ImageViewActivity
 import dev.nevah5.uek355.wallpaper_ai.R
 
 class LibraryPageFragment : Fragment() {
@@ -57,7 +59,18 @@ class LibraryPageFragment : Fragment() {
             }
 
             container.addView(imageView)
+
+            imageView.setOnClickListener {
+                startImageViewActivity(uri)
+            }
         }
+    }
+
+    private fun startImageViewActivity(url: String){
+        val imageViewIntent = Intent(requireActivity(), ImageViewActivity::class.java)
+        imageViewIntent.putExtra("url", url)
+        imageViewIntent.putExtra("description", "<insert image description here>")
+        startActivity(imageViewIntent)
     }
 
     private fun dpToPx(dp: Int): Int {

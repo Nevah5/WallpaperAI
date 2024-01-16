@@ -2,6 +2,12 @@
     <string name="app_name">WallpaperAI</string>
     <string name="logo_alt">WallpaperAI Logo</string>
 
+    <!-- ImageView Activity -->
+    <string name="imageview_template_description">Your image description</string>
+    <string name="imageview_template_content_description">Wallpaper/Widget image</string>
+    <string name="imageview_button_set_wallpaper">Set wallpaper</string>
+    <string name="imageview_button_back">Back to Library</string>
+
     <!-- Generate Activity -->
     <string name="generate_title1">Conjuring Pixels…</string>
     <string name="generate_title2">Patience, Picasso…</string>
