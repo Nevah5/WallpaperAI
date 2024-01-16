@@ -59,6 +59,7 @@ class ImageViewActivity : AppCompatActivity() {
                     try {
                         wallpaperManager.setBitmap(resource)
                         showToast("Success!")
+                        finish()
                     } catch (e: Exception) {
                         e.printStackTrace()
                         showToast("Something went wrong whilst trying to set wallpaper.")
