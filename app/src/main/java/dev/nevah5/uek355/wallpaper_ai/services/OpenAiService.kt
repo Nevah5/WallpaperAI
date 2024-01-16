@@ -62,7 +62,7 @@ class OpenAiService : Service() {
         }
     }
 
-    suspend fun generateImage(apiKey: String, description: String, isWallpaper: Boolean): Boolean {
+    suspend fun generateImage(apiKey: String, description: String, isWallpaper: Boolean): String {
         val client = OkHttpClient()
         val payload = """
         {
@@ -72,6 +72,7 @@ class OpenAiService : Service() {
             "size": "${ if(isWallpaper) "1024x1792" else "1792x1024"}"
         }
         """
+        println("Message payload: $payload")
         val request = Request.Builder()
             .url("https://api.openai.com/v1/images/generations")
             .addHeader("Authorization", "Bearer $apiKey")
@@ -87,10 +88,12 @@ class OpenAiService : Service() {
             println("Response: $response")
 
             println(response.message)
-            response.isSuccessful
+            println(response.body)
+            response.body.toString()
         } catch (e: IOException) {
-            false
+            "Something went wrong!"
         }
+        return ""
     }
 
     fun getErrorString(): String {

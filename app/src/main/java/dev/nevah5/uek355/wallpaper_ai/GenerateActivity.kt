@@ -8,6 +8,7 @@ import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import dev.nevah5.uek355.wallpaper_ai.services.DatabaseService
 import dev.nevah5.uek355.wallpaper_ai.services.PreferenceService
 import dev.nevah5.uek355.wallpaper_ai.services.OpenAiService
 import kotlinx.coroutines.Dispatchers
@@ -17,24 +18,30 @@ import kotlinx.coroutines.launch
 class GenerateActivity : AppCompatActivity() {
     private lateinit var preferenceService: PreferenceService
     private lateinit var openAiService: OpenAiService
-    private var isDatabaseServiceBound = false
+    private lateinit var databaseService: DatabaseService
+    private var isPreferenceServiceBound = false
     private var isOpenAiServiceBound = false
+    private var isDatabaseServiceBound = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_generate)
 
         Intent(this, PreferenceService::class.java).also { intent ->
-            this.bindService(intent, databaseConnection, Context.BIND_AUTO_CREATE)
+            this.bindService(intent, preferenceConnection, Context.BIND_AUTO_CREATE)
         }
 
         Intent(this, OpenAiService::class.java).also { intent ->
             this.bindService(intent, openAiConnection, Context.BIND_AUTO_CREATE)
         }
+
+        Intent(this, DatabaseService::class.java).also { intent ->
+            this.bindService(intent, databaseConnection, Context.BIND_AUTO_CREATE)
+        }
     }
 
     private fun checkServicesConnected() {
-        if (!isDatabaseServiceBound || !isOpenAiServiceBound) return
+        if (!isPreferenceServiceBound || !isOpenAiServiceBound || !isDatabaseServiceBound) return
 
         val isWallpaper = intent.getBooleanExtra("isWallpaper", true)
         val description = intent.getStringExtra("description") as String
@@ -43,19 +50,33 @@ class GenerateActivity : AppCompatActivity() {
         println("Description: $description")
 
         GlobalScope.launch(Dispatchers.IO) {
-            val resultBool = openAiService.generateImage(preferenceService.getApiKey(), description, isWallpaper)
+            val imageUrl = openAiService.generateImage(preferenceService.getApiKey(), description, isWallpaper)
             launch(Dispatchers.Main) {
-                println("GENERATED IMAGE RESULT BOOL: $resultBool")
+                println("GENERATED IMAGE RESULT: $imageUrl")
+                databaseService.saveImage(imageUrl, description)
                 setResult(Activity.RESULT_OK)
                 finish()
             }
         }
     }
 
-    private val databaseConnection = object : ServiceConnection {
+    private val preferenceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
             val binder = service as PreferenceService.LocalBinder
             preferenceService = binder.getService()
+            isPreferenceServiceBound = true
+            checkServicesConnected()
+        }
+
+        override fun onServiceDisconnected(arg0: ComponentName) {
+            isPreferenceServiceBound = false
+        }
+    }
+
+    private val databaseConnection = object : ServiceConnection {
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            val binder = service as DatabaseService.LocalBinder
+            databaseService = binder.getService()
             isDatabaseServiceBound = true
             checkServicesConnected()
         }
@@ -80,13 +101,17 @@ class GenerateActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if (isDatabaseServiceBound) {
-            this.unbindService(databaseConnection)
-            isDatabaseServiceBound = false
+        if (isPreferenceServiceBound) {
+            this.unbindService(preferenceConnection)
+            isPreferenceServiceBound = false
         }
         if (isOpenAiServiceBound) {
             this.unbindService(openAiConnection)
             isOpenAiServiceBound = false
+        }
+        if (isDatabaseServiceBound) {
+            this.unbindService(databaseConnection)
+            isDatabaseServiceBound = false
         }
     }
 }
