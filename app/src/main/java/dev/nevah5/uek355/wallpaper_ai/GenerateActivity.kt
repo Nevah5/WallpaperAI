@@ -8,6 +8,7 @@ import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import android.widget.Toast
 import dev.nevah5.uek355.wallpaper_ai.services.DatabaseService
 import dev.nevah5.uek355.wallpaper_ai.services.PreferenceService
 import dev.nevah5.uek355.wallpaper_ai.services.OpenAiService
@@ -50,12 +51,19 @@ class GenerateActivity : AppCompatActivity() {
         println("Description: $description")
 
         GlobalScope.launch(Dispatchers.IO) {
-            val imageUrl = openAiService.generateImage(preferenceService.getApiKey(), description, isWallpaper)
+            val imageResponse = openAiService.generateImage(preferenceService.getApiKey(), description, isWallpaper)
             launch(Dispatchers.Main) {
-                println("GENERATED IMAGE RESULT: $imageUrl")
-                databaseService.saveImage(imageUrl, description)
-                setResult(Activity.RESULT_OK)
-                finish()
+                if(imageResponse.successful) {
+                    println("GENERATED IMAGE RESULT: ${imageResponse.url}")
+                    databaseService.saveImage(imageResponse.url, description)
+                    setResult(Activity.RESULT_OK)
+                    finish()
+                } else {
+                    Toast.makeText(this@GenerateActivity, imageResponse.url, Toast.LENGTH_LONG)
+                        .show()
+                    setResult(Activity.RESULT_CANCELED)
+                    finish()
+                }
             }
         }
     }

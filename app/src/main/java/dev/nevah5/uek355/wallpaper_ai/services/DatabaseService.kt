@@ -10,7 +10,7 @@ import java.io.File
 class DatabaseService : Service() {
     private val binder = LocalBinder()
     companion object {
-        private const val IMAGES_JSON_FILE_NAME = "images.json"
+        private const val IMAGES_JSON_FILE_NAME = "images_test.json"
     }
 
     inner class LocalBinder : Binder() {
