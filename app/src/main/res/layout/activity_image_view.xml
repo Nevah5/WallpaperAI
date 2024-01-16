@@ -49,68 +49,71 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageview_wallpaper"
-        android:layout_width="350dp"
-        android:layout_height="350dp"
-        android:layout_marginTop="30dp"
-        android:contentDescription="@string/imageview_template_content_description"
-        app:layout_constraintBottom_toTopOf="@+id/imageview_description"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageview_top"
-        app:layout_constraintVertical_bias="0.74"
-        app:srcCompat="@drawable/baseline_image_24" />
-
-    <TextView
-        android:id="@+id/imageview_description"
+    <ScrollView
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="244dp"
-        android:text="@string/imageview_template_description"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        android:textStyle="bold"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/imageview_button_set_wallpaper"
-        android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/button_background"
-        android:backgroundTint="@color/primary"
-        android:onClick="onButtonSetWallpaper"
-        android:text="@string/imageview_button_set_wallpaper"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toTopOf="@+id/imageview_button_back"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/imageview_top">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/imageview_button_back"
-        android:layout_width="match_parent"
-        android:layout_height="50sp"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="50dp"
-        android:background="@drawable/button_background"
-        android:backgroundTint="@color/primary"
-        android:onClick="onButtonBackToLibrary"
-        android:text="@string/imageview_button_back"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/imageview_wallpaper"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
+                android:contentDescription="@string/imageview_template_content_description"
+                app:srcCompat="@drawable/baseline_image_24"
+                tools:layout_editor_absoluteY="30dp" />
+
+            <TextView
+                android:id="@+id/imageview_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/imageview_template_description"
+                android:textAlignment="center"
+                android:layout_marginBottom="50dp"
+                android:layout_marginTop="20dp"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/imageview_button_set_wallpaper"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/button_background"
+                android:backgroundTint="@color/primary"
+                android:onClick="onButtonSetWallpaper"
+                android:text="@string/imageview_button_set_wallpaper"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/imageview_button_back"
+                android:layout_width="match_parent"
+                android:layout_height="50sp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="50dp"
+                android:background="@drawable/button_background"
+                android:backgroundTint="@color/primary"
+                android:onClick="onButtonBackToLibrary"
+                android:text="@string/imageview_button_back"
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </ScrollView>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
