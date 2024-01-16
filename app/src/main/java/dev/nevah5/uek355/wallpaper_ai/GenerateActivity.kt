@@ -86,16 +86,17 @@ class GenerateActivity : AppCompatActivity() {
         titles.add(resources.getString(R.string.generate_title5))
         titles.add(resources.getString(R.string.generate_title6))
 
-        val loadingTitle = findViewById<TextView>(R.id.generate_loading_title)
-        var index = 1
-        GlobalScope.launch(Dispatchers.IO) {
-            for(i in 1..20){
-                delay(1500)
-                loadingTitle.text = titles[index]
-                index++
-                if(index == titles.size) index = 0
-            }
-        }
+        // TODO: show the user that something is happening
+//        val loadingTitle = findViewById<TextView>(R.id.generate_loading_title)
+//        var index = 1
+//        GlobalScope.launch(Dispatchers.IO) {
+//            for(i in 1..20){
+//                delay(1500)
+//                loadingTitle.text = titles[index]
+//                index++
+//                if(index == titles.size) index = 0
+//            }
+//        }
     }
 
     private val preferenceConnection = object : ServiceConnection {

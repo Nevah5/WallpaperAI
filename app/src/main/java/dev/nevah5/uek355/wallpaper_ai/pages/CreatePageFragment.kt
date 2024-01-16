@@ -111,7 +111,7 @@ class CreatePageFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        if (!preferenceService.hasApiKey()) {
+        if (isBound && !preferenceService.hasApiKey()) {
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             loginActivityResultListener.launch(intent)
         }
