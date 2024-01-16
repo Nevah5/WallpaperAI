@@ -9,18 +9,15 @@ import android.os.IBinder
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKeys
 
-// TODO: Refactor to `PreferenceService`
-class DatabaseService : Service() {
+class PreferenceService : Service() {
     private val binder = LocalBinder()
-    // TODO: make this persistent
-    private var apiKey = ""
 
     companion object {
         private const val API_KEY_KEY = "API_KEY"
     }
 
     inner class LocalBinder : Binder() {
-        fun getService(): DatabaseService = this@DatabaseService
+        fun getService(): PreferenceService = this@PreferenceService
     }
 
     override fun onBind(intent: Intent): IBinder {

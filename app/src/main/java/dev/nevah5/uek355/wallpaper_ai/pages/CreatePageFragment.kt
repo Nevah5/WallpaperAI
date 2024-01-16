@@ -20,12 +20,12 @@ import androidx.navigation.findNavController
 import dev.nevah5.uek355.wallpaper_ai.GenerateActivity
 import dev.nevah5.uek355.wallpaper_ai.LoginActivity
 import dev.nevah5.uek355.wallpaper_ai.R
-import dev.nevah5.uek355.wallpaper_ai.services.DatabaseService
+import dev.nevah5.uek355.wallpaper_ai.services.PreferenceService
 
 
 class CreatePageFragment : Fragment() {
     private lateinit var navController: NavController
-    private lateinit var databaseService: DatabaseService
+    private lateinit var preferenceService: PreferenceService
     private var isBound = false
 
     private val loginActivityResultListener =
@@ -98,8 +98,8 @@ class CreatePageFragment : Fragment() {
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
-            val binder = service as DatabaseService.LocalBinder
-            databaseService = binder.getService()
+            val binder = service as PreferenceService.LocalBinder
+            preferenceService = binder.getService()
             isBound = true
         }
 
@@ -111,7 +111,7 @@ class CreatePageFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        if (!databaseService.hasApiKey()) {
+        if (!preferenceService.hasApiKey()) {
             val intent = Intent(requireActivity(), LoginActivity::class.java)
             loginActivityResultListener.launch(intent)
         }
@@ -119,7 +119,7 @@ class CreatePageFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        Intent(context, DatabaseService::class.java).also { intent ->
+        Intent(context, PreferenceService::class.java).also { intent ->
             context?.bindService(intent, connection, Context.BIND_AUTO_CREATE)
         }
     }

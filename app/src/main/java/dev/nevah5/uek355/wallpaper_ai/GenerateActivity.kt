@@ -7,15 +7,14 @@ import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
-import android.widget.Toast
-import dev.nevah5.uek355.wallpaper_ai.services.DatabaseService
+import dev.nevah5.uek355.wallpaper_ai.services.PreferenceService
 import dev.nevah5.uek355.wallpaper_ai.services.OpenAiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class GenerateActivity : AppCompatActivity() {
-    private lateinit var databaseService: DatabaseService
+    private lateinit var preferenceService: PreferenceService
     private lateinit var openAiService: OpenAiService
     private var isDatabaseServiceBound = false
     private var isOpenAiServiceBound = false
@@ -24,7 +23,7 @@ class GenerateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_generate)
 
-        Intent(this, DatabaseService::class.java).also { intent ->
+        Intent(this, PreferenceService::class.java).also { intent ->
             this.bindService(intent, databaseConnection, Context.BIND_AUTO_CREATE)
         }
 
@@ -45,7 +44,7 @@ class GenerateActivity : AppCompatActivity() {
         println("Description: $description")
 
         GlobalScope.launch(Dispatchers.IO) {
-            val resultBool = openAiService.generateImage(databaseService.getApiKey(), description, isWallpaper)
+            val resultBool = openAiService.generateImage(preferenceService.getApiKey(), description, isWallpaper)
             launch(Dispatchers.Main) {
                 println("GENERATED IMAGE RESULT BOOL: $resultBool")
                 finish()
@@ -55,8 +54,8 @@ class GenerateActivity : AppCompatActivity() {
 
     private val databaseConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
-            val binder = service as DatabaseService.LocalBinder
-            databaseService = binder.getService()
+            val binder = service as PreferenceService.LocalBinder
+            preferenceService = binder.getService()
             isDatabaseServiceBound = true
             checkServicesConnected()
         }

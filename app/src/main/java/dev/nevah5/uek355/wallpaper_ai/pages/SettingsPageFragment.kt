@@ -14,17 +14,17 @@ import androidx.appcompat.widget.AppCompatButton
 import androidx.fragment.app.Fragment
 import dev.nevah5.uek355.wallpaper_ai.LoginActivity
 import dev.nevah5.uek355.wallpaper_ai.R
-import dev.nevah5.uek355.wallpaper_ai.services.DatabaseService
+import dev.nevah5.uek355.wallpaper_ai.services.PreferenceService
 
 class SettingsPageFragment : Fragment() {
-    private lateinit var databaseService: DatabaseService
+    private lateinit var preferenceService: PreferenceService
     private var isBound = false
     private lateinit var view: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        Intent(context, DatabaseService::class.java).also { intent ->
+        Intent(context, PreferenceService::class.java).also { intent ->
             context?.bindService(intent, connection, Context.BIND_AUTO_CREATE)
         }
     }
@@ -57,7 +57,7 @@ class SettingsPageFragment : Fragment() {
     }
 
     private fun onClearApiKeyButtonClick() {
-        databaseService.setApiKey("")
+        preferenceService.setApiKey("")
         Toast.makeText(requireActivity(), "Cleared API Key", Toast.LENGTH_LONG).show()
         updateApiKeyButtonVisibilities(view)
     }
@@ -73,7 +73,7 @@ class SettingsPageFragment : Fragment() {
         val setApiKeyButton =
             view.findViewById<AppCompatButton>(R.id.settings_button_set_apikey)
 
-        if (databaseService.hasApiKey()) {
+        if (preferenceService.hasApiKey()) {
             clearApiKeyButton.visibility = View.VISIBLE
             setApiKeyButton.visibility = View.GONE
         } else {
@@ -91,8 +91,8 @@ class SettingsPageFragment : Fragment() {
 
     private val connection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
-            val binder = service as DatabaseService.LocalBinder
-            databaseService = binder.getService()
+            val binder = service as PreferenceService.LocalBinder
+            preferenceService = binder.getService()
             isBound = true
 
             updateApiKeyButtonVisibilities(view)

@@ -19,7 +19,7 @@
             android:exported="false" />
 
         <service android:name=".services.OpenAiService" />
-        <service android:name=".services.DatabaseService" />
+        <service android:name=".services.PreferenceService" />
 
         <activity
             android:name=".LoginActivity"
