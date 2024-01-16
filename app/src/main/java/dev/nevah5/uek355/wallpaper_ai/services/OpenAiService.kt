@@ -65,7 +65,7 @@ class OpenAiService : Service() {
         }
     }
 
-    suspend fun generateImage(apiKey: String, description: String, isWallpaper: Boolean): ImageResponseModel {
+    suspend fun generateImage(apiKey: String, description: String, isWallpaper: Boolean): ImageResponseModel? {
         val client = OkHttpClient.Builder()
             .readTimeout(120, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)

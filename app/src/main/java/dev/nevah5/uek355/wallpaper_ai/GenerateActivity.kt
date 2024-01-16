@@ -8,12 +8,14 @@ import android.content.ServiceConnection
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.IBinder
+import android.widget.TextView
 import android.widget.Toast
 import dev.nevah5.uek355.wallpaper_ai.services.DatabaseService
 import dev.nevah5.uek355.wallpaper_ai.services.PreferenceService
 import dev.nevah5.uek355.wallpaper_ai.services.OpenAiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class GenerateActivity : AppCompatActivity() {
@@ -51,9 +53,15 @@ class GenerateActivity : AppCompatActivity() {
         println("Description: $description")
 
         GlobalScope.launch(Dispatchers.IO) {
-            val imageResponse = openAiService.generateImage(preferenceService.getApiKey(), description, isWallpaper)
+            val imageResponse =
+                openAiService.generateImage(preferenceService.getApiKey(), description, isWallpaper)
             launch(Dispatchers.Main) {
-                if(imageResponse.successful) {
+                if (imageResponse == null) {
+                    Toast.makeText(this@GenerateActivity, "Check your connection.", Toast.LENGTH_LONG)
+                        .show()
+                    setResult(Activity.RESULT_CANCELED)
+                    finish()
+                } else if (imageResponse.successful) {
                     println("GENERATED IMAGE RESULT: ${imageResponse.url}")
                     databaseService.saveImage(imageResponse.url, description)
                     setResult(Activity.RESULT_OK)
@@ -64,6 +72,28 @@ class GenerateActivity : AppCompatActivity() {
                     setResult(Activity.RESULT_CANCELED)
                     finish()
                 }
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val titles = ArrayList<String>()
+        titles.add(resources.getString(R.string.generate_title1))
+        titles.add(resources.getString(R.string.generate_title2))
+        titles.add(resources.getString(R.string.generate_title3))
+        titles.add(resources.getString(R.string.generate_title4))
+        titles.add(resources.getString(R.string.generate_title5))
+        titles.add(resources.getString(R.string.generate_title6))
+
+        val loadingTitle = findViewById<TextView>(R.id.generate_loading_title)
+        var index = 1
+        GlobalScope.launch(Dispatchers.IO) {
+            for(i in 1..20){
+                delay(1500)
+                loadingTitle.text = titles[index]
+                index++
+                if(index == titles.size) index = 0
             }
         }
     }
