@@ -1,7 +1,11 @@
 package dev.nevah5.uek355.wallpaper_ai.pages
 
+import android.content.ComponentName
+import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,8 +15,38 @@ import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import dev.nevah5.uek355.wallpaper_ai.ImageViewActivity
 import dev.nevah5.uek355.wallpaper_ai.R
+import dev.nevah5.uek355.wallpaper_ai.services.DatabaseService
+import dev.nevah5.uek355.wallpaper_ai.services.PreferenceService
 
 class LibraryPageFragment : Fragment() {
+    private lateinit var databaseService: DatabaseService
+    private var isBound = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        Intent(context, DatabaseService::class.java).also { intent ->
+            context?.bindService(intent, connection, Context.BIND_AUTO_CREATE)
+        }
+    }
+
+
+    private val connection = object : ServiceConnection {
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            val binder = service as DatabaseService.LocalBinder
+            databaseService = binder.getService()
+            isBound = true
+
+            val wallpapers = databaseService.getImages()
+            if(wallpapers.isEmpty()) return
+            view?.let { drawImages(it.findViewById(R.id.library_wallpapers), databaseService.getImages()) }
+        }
+
+        override fun onServiceDisconnected(arg0: ComponentName) {
+            isBound = false
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -68,6 +102,14 @@ class LibraryPageFragment : Fragment() {
     private fun dpToPx(dp: Int): Int {
         val density = resources.displayMetrics.density
         return (dp * density).toInt()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        if (isBound) {
+            context?.unbindService(connection)
+            isBound = false
+        }
     }
 }
 
