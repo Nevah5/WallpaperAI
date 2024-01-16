@@ -7,21 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
-import androidx.core.graphics.drawable.toDrawable
-import androidx.core.net.toUri
-import androidx.core.util.TypedValueCompat.dpToPx
-import androidx.core.view.children
-import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import dev.nevah5.uek355.wallpaper_ai.ImageViewActivity
 import dev.nevah5.uek355.wallpaper_ai.R
 
 class LibraryPageFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,17 +22,18 @@ class LibraryPageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val templatesList = ArrayList<String>()
-        templatesList.add("https://cdn.midjourney.com/9d6de1eb-be8a-4fd2-b01f-226bd759cce1/0_2.webp")
-        templatesList.add("https://cdn.midjourney.com/639e3bbe-84a5-47a8-a4a3-9ec4c376f1d7/0_3.webp")
-        templatesList.add("https://cdn.midjourney.com/213483d2-0cab-4514-b245-b400ad8e1e71/0_3.webp")
 
-        drawImages(view.findViewById(R.id.library_templates), templatesList)
+        val templates = HashMap<String, String>()
+        templates["https://cdn.midjourney.com/639e3bbe-84a5-47a8-a4a3-9ec4c376f1d7/0_3.webp"] = "black ink illustration of empress, light pink accents, in the style of eve ventrue, 2d game art, clamp, porcelain, high-contrast shading, illustration, hurufiyya"
+        templates["https://cdn.midjourney.com/213483d2-0cab-4514-b245-b400ad8e1e71/0_3.webp"] = "breathtakingly beautiful scene where a divine pink dragon"
+        templates["https://cdn.midjourney.com/9d6de1eb-be8a-4fd2-b01f-226bd759cce1/0_2.webp"] = "Epic ink bending shot, A ancient Chinesewarrior wearing hanfu fghting with a dragon,POV view, First person, traditional Chinese inkpainting style, exaggerated perspective,breathtaking moment, 8k, simple style, style byWu Guanzhong"
+
+        drawImages(view.findViewById(R.id.library_templates), templates)
     }
 
-    private fun drawImages(container: LinearLayout, uris: List<String>) {
+    private fun drawImages(container: LinearLayout, images: Map<String, String>) {
         container.removeAllViews()
-        uris.forEach { uri ->
+        images.forEach { (uri, description) ->
             val imageView = ImageView(requireActivity()).apply {
                 val layoutParams = LinearLayout.LayoutParams(
                     dpToPx(500),
@@ -61,15 +53,15 @@ class LibraryPageFragment : Fragment() {
             container.addView(imageView)
 
             imageView.setOnClickListener {
-                startImageViewActivity(uri)
+                startImageViewActivity(uri, description)
             }
         }
     }
 
-    private fun startImageViewActivity(url: String){
+    private fun startImageViewActivity(url: String, description: String){
         val imageViewIntent = Intent(requireActivity(), ImageViewActivity::class.java)
         imageViewIntent.putExtra("url", url)
-        imageViewIntent.putExtra("description", "<insert image description here>")
+        imageViewIntent.putExtra("description", description)
         startActivity(imageViewIntent)
     }
 
